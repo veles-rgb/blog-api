@@ -9,6 +9,7 @@ router.get("/", likesController.getPostLikesById); // /api/likes?postId=...
 router.post("/", likesController.postLike);
 
 // Protected - Owner or Admin
+router.get("/user/:username", likesController.getAllUserLikes);
 router.delete("/:postId", likesController.deleteLike);
 
 module.exports = router;

@@ -10,6 +10,7 @@ router.get("/:commentId", commentsController.getCommentById);
 router.post("/", commentsController.postComment);
 
 // Protected - Owner or Admin
+router.get("/user/:username", commentsController.getAllUserComments);
 router.patch("/:commentId", commentsController.updateCommentById);
 router.delete("/:commentId", commentsController.deleteCommentById);
 
