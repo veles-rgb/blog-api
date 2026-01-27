@@ -11,6 +11,12 @@ async function postLike(req, res, next) {
     // Add like
 }
 
+async function getAllUserLikes(req, res, next) {
+    // Check if owner or admin
+    // Get user ID
+    // Get all user likes
+}
+
 async function deleteLike(req, res, next) {
     // Check if user is logged in
     // Get post ID
@@ -21,5 +27,6 @@ async function deleteLike(req, res, next) {
 module.exports = {
     getPostLikesById,
     postLike,
+    getAllUserLikes,
     deleteLike,
 };
