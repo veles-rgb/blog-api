@@ -1,16 +1,13 @@
 const slugify = require("slugify");
+const { validate: isUuid } = require("uuid");
 
 async function getAllPosts(req, res, next) {
     try {
         const { prisma } = await import("../lib/prisma.mjs");
 
         const posts = await prisma.posts.findMany({
-            where: {
-                isPublished: true,
-            },
-            orderBy: {
-                createdAt: 'desc',
-            }
+            where: { isPublished: true },
+            orderBy: { createdAt: "desc" },
         });
 
         return res.status(200).json({ posts });
@@ -27,18 +24,12 @@ async function getAllUserPosts(req, res, next) {
         const posts = await prisma.posts.findMany({
             where: {
                 isPublished: true,
-                author: {
-                    username: username,
-                },
+                author: { username },
             },
             include: {
-                author: {
-                    select: { username: true },
-                },
+                author: { select: { username: true } },
             },
-            orderBy: {
-                createdAt: 'desc',
-            }
+            orderBy: { createdAt: "desc" },
         });
 
         return res.status(200).json({ posts });
@@ -50,20 +41,22 @@ async function getAllUserPosts(req, res, next) {
 async function getPostById(req, res, next) {
     try {
         const { postId } = req.params;
+
+        if (!isUuid(postId)) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
         const { prisma } = await import("../lib/prisma.mjs");
 
         const post = await prisma.posts.findUnique({
-            where: {
-                id: postId,
-                isPublished: true
-            }
+            where: { id: postId },
         });
 
         if (!post || !post.isPublished) {
             return res.status(404).json({ message: "Post not found" });
         }
 
-        res.status(200).json({ post });
+        return res.status(200).json({ post });
     } catch (error) {
         return next(error);
     }
@@ -76,16 +69,12 @@ async function getPostBySlug(req, res, next) {
 
         const post = await prisma.posts.findFirst({
             where: {
-                slug: slug,
+                slug,
                 isPublished: true,
-                author: {
-                    username: username,
-                },
+                author: { username },
             },
             include: {
-                author: {
-                    select: { username: true },
-                },
+                author: { select: { username: true } },
             },
         });
 
@@ -103,7 +92,6 @@ async function createPost(req, res, next) {
     try {
         const user = req.user;
 
-        // Author or admin check
         if (!user.isAuthor && !user.isAdmin) {
             return res.status(403).json({ message: "You are not an author or admin." });
         }
@@ -128,15 +116,19 @@ async function createPost(req, res, next) {
 }
 
 async function updatePostById(req, res, next) {
-    const user = req.user;
     try {
+        const user = req.user;
         const { postId } = req.params;
+
+        if (!isUuid(postId)) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
         let { title, content } = req.body || {};
         const { prisma } = await import("../lib/prisma.mjs");
 
-        // Get post from ID
         const post = await prisma.posts.findUnique({
-            where: { id: postId }
+            where: { id: postId },
         });
 
         if (!post) {
@@ -152,7 +144,6 @@ async function updatePostById(req, res, next) {
 
         const data = { title, content };
 
-        // only update slug if title changed
         if (title !== post.title) {
             data.slug = slugify(title, { lower: true, strict: true });
         }
@@ -169,14 +160,18 @@ async function updatePostById(req, res, next) {
 }
 
 async function deletePostById(req, res, next) {
-    const user = req.user;
-
     try {
+        const user = req.user;
         const { postId } = req.params;
+
+        if (!isUuid(postId)) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
         const { prisma } = await import("../lib/prisma.mjs");
 
         const post = await prisma.posts.findUnique({
-            where: { id: postId }
+            where: { id: postId },
         });
 
         if (!post) return res.status(404).json({ message: "Post not found" });
@@ -186,7 +181,7 @@ async function deletePostById(req, res, next) {
         }
 
         const deletedPost = await prisma.posts.delete({
-            where: { id: postId }
+            where: { id: postId },
         });
 
         return res.status(200).json({ deletedPost });
@@ -196,13 +191,18 @@ async function deletePostById(req, res, next) {
 }
 
 async function publishPost(req, res, next) {
-    const user = req.user;
     try {
+        const user = req.user;
         const { postId } = req.params;
+
+        if (!isUuid(postId)) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
         const { prisma } = await import("../lib/prisma.mjs");
 
         const post = await prisma.posts.findUnique({
-            where: { id: postId }
+            where: { id: postId },
         });
 
         if (!post) return res.status(404).json({ message: "Post not found" });
@@ -217,8 +217,8 @@ async function publishPost(req, res, next) {
             where: { id: postId },
             data: {
                 isPublished: true,
-                publishedAt: new Date()
-            }
+                publishedAt: new Date(),
+            },
         });
 
         return res.status(200).json({ publishedPost });
@@ -228,14 +228,18 @@ async function publishPost(req, res, next) {
 }
 
 async function unpublishPost(req, res, next) {
-    const user = req.user;
-
     try {
+        const user = req.user;
         const { postId } = req.params;
+
+        if (!isUuid(postId)) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
         const { prisma } = await import("../lib/prisma.mjs");
 
         const post = await prisma.posts.findUnique({
-            where: { id: postId }
+            where: { id: postId },
         });
 
         if (!post) return res.status(404).json({ message: "Post not found" });
@@ -251,13 +255,12 @@ async function unpublishPost(req, res, next) {
             data: {
                 isPublished: false,
                 publishedAt: null,
-            }
+            },
         });
 
         return res.status(200).json({ unpublishedPost });
     } catch (error) {
         return next(error);
-
     }
 }
 
