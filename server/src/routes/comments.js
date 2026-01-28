@@ -1,17 +1,29 @@
 const router = require("express").Router();
 
+const passport = require("passport");
+
 const commentsController = require("../controllers/comments.controller");
 
 // Public
-router.get("/", commentsController.getPostCommentsById); // /api/comments?postId=...
-router.get("/:commentId", commentsController.getCommentById);
+router.get("/", commentsController.getPostCommentsById); // GET /api/comments?postId=...
+router.get("/:commentId", commentsController.getCommentById); // GET /api/comments/:commentId
 
 // Protected - Logged in
-router.post("/", commentsController.postComment);
+router.post("/:postId", passport.authenticate("jwt", { session: false }), commentsController.postComment);
+// POST /api/comments/:postId  (body: { content })
 
 // Protected - Owner or Admin
-router.get("/user/:username", commentsController.getAllUserComments);
-router.patch("/:commentId", commentsController.updateCommentById);
-router.delete("/:commentId", commentsController.deleteCommentById);
+router.get(
+    "/user/:username",
+    passport.authenticate("jwt", { session: false }),
+    commentsController.getAllUserComments
+); // GET /api/comments/user/:username
+
+router.delete(
+    "/:commentId",
+    passport.authenticate("jwt", { session: false }),
+    commentsController.deleteCommentById
+);
+
 
 module.exports = router;
