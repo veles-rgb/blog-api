@@ -5,11 +5,10 @@
 }
 
 .postItem {
-    border: 1px solid black;
+    border: 1px solid var(--border);
     padding: 1rem;
 }
 
 .postItem a {
     text-decoration: none;
-    color: black;
 }
