@@ -7,6 +7,9 @@ async function getAllPosts(req, res, next) {
 
         const posts = await prisma.posts.findMany({
             where: { isPublished: true },
+            include: {
+                author: { select: { username: true } },
+            },
             orderBy: { createdAt: "desc" },
         });
 
