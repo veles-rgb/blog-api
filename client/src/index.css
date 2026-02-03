@@ -1,0 +1,70 @@
+:root {
+    /* Backgrounds */
+    --bg: #0b1020;
+    /* page background */
+    --bg-elev-1: #0f1730;
+    /* cards/nav */
+    --bg-elev-2: #121d3a;
+    /* hover/raised */
+
+    /* Text */
+    --text: #e6e9f2;
+    /* primary text */
+    --text-muted: #a8b0c3;
+    /* secondary text */
+    --text-faint: #7f88a2;
+    /* subtle text */
+
+    /* Brand / Accent (cool cyan/blue) */
+    --primary: #4cc9f0;
+    --primary-2: #4895ef;
+    --accent: #72efdd;
+    /* minty accent for highlights */
+
+    /* Status */
+    --success: #22c55e;
+    --warning: #fbbf24;
+    --danger: #ef4444;
+
+    /* UI */
+    --border: rgba(230, 233, 242, 0.12);
+    --border-strong: rgba(230, 233, 242, 0.18);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+    /* Links */
+    --link: var(--primary);
+    --link-hover: var(--accent);
+
+    /* Focus ring */
+    --focus: rgba(76, 201, 240, 0.35);
+
+    /* Radius + spacing (optional but handy) */
+    --radius: 12px;
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+
+    /* Typography */
+    --font-sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+        "Segoe UI Emoji";
+}
+
+html,
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+}
+
+a {
+    color: var(--link);
+}
+
+a:hover {
+    color: var(--link-hover);
+}
+
+:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+}
