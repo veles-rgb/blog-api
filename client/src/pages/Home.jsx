@@ -60,7 +60,7 @@ export default function Home() {
       ) : (
         <div
           className={styles.postsContainer}
-          style={{ padding: '1rem', border: '1px solid red' }}
+          style={{ padding: '1rem', border: '1px solid var(--border-strong)' }}
         >
           {posts.map((post) => {
             const preview =
@@ -74,9 +74,13 @@ export default function Home() {
                   to={`/posts/${post.author?.username ?? 'unknown'}/${post.slug}`}
                 >
                   <div>{post.title}</div>
-                  <div>{preview}</div>
+                  <div style={{ color: 'var(--text-muted)' }}>{preview}</div>
                   <div
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      color: 'var(--text-faint)',
+                    }}
                   >
                     <div>Author: {post.author.username}</div>
                     <div>Posted: {post.publishedAt}</div>
