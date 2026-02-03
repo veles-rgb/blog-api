@@ -58,37 +58,36 @@ export default function Home() {
       {posts.length === 0 ? (
         <div>No posts yet.</div>
       ) : (
-        <div
-          className={styles.postsContainer}
-          style={{ padding: '1rem', border: '1px solid var(--border-strong)' }}
-        >
-          {posts.map((post) => {
-            const preview =
-              post.content.length > 30
-                ? post.content.substring(0, 30) + '...'
-                : post.content;
+        <div className={styles.postsContainer}>
+          <div className={styles.scrollInner}>
+            {posts.map((post) => {
+              const preview =
+                post.content.length > 30
+                  ? post.content.substring(0, 30) + '...'
+                  : post.content;
 
-            return (
-              <div key={post.id} className={styles.postItem}>
-                <Link
-                  to={`/posts/${post.author?.username ?? 'unknown'}/${post.slug}`}
-                >
-                  <div>{post.title}</div>
-                  <div style={{ color: 'var(--text-muted)' }}>{preview}</div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      color: 'var(--text-faint)',
-                    }}
+              return (
+                <div key={post.id} className={styles.postItem}>
+                  <Link
+                    to={`/posts/${post.author?.username ?? 'unknown'}/${post.slug}`}
                   >
-                    <div>Author: {post.author.username}</div>
-                    <div>Posted: {post.publishedAt}</div>
-                  </div>
-                </Link>
-              </div>
-            );
-          })}
+                    <div>{post.title}</div>
+                    <div style={{ color: 'var(--text-muted)' }}>{preview}</div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        color: 'var(--text-faint)',
+                      }}
+                    >
+                      <div>Author: {post.author.username}</div>
+                      <div>Posted: {post.publishedAt}</div>
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </main>
