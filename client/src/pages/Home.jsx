@@ -62,22 +62,29 @@ export default function Home() {
           className={styles.postsContainer}
           style={{ padding: '1rem', border: '1px solid red' }}
         >
-          {posts.map((post) => (
-            <div key={post.id} className={styles.postItem}>
-              <Link
-                to={`/posts/${post.author?.username ?? 'unknown'}/${post.slug}`}
-              >
-                <div>{post.title}</div>
-                <div>{post.content.substring(0, 30) + '...'}</div>
-                <div
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
+          {posts.map((post) => {
+            const preview =
+              post.content.length > 30
+                ? post.content.substring(0, 30) + '...'
+                : post.content;
+
+            return (
+              <div key={post.id} className={styles.postItem}>
+                <Link
+                  to={`/posts/${post.author?.username ?? 'unknown'}/${post.slug}`}
                 >
-                  <div>Author: {post.author.username}</div>
-                  <div>Posted: {post.publishedAt}</div>
-                </div>
-              </Link>
-            </div>
-          ))}
+                  <div>{post.title}</div>
+                  <div>{preview}</div>
+                  <div
+                    style={{ display: 'flex', justifyContent: 'space-between' }}
+                  >
+                    <div>Author: {post.author.username}</div>
+                    <div>Posted: {post.publishedAt}</div>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
         </div>
       )}
     </main>
