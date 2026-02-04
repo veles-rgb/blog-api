@@ -29,3 +29,16 @@
 .postItem a {
     text-decoration: none;
 }
+
+.postDetails {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-faint);
+}
+
+.postDetails div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+}
