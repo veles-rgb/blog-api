@@ -53,8 +53,24 @@ async function logout(req, res, next) {
     return res.status(200).json({ message: "Logged out" });
 }
 
+function verify(req, res) {
+    const user = req.user;
+
+    const safeUser = {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        isAuthor: user.isAuthor,
+        createdAt: user.createdAt,
+    };
+
+    return res.status(200).json({ user: safeUser });
+}
+
 module.exports = {
     register,
     login,
     logout,
+    verify
 };
