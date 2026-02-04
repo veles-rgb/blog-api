@@ -56,6 +56,12 @@ body {
     font-family: var(--font-sans);
 }
 
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 main {
     display: flex;
     flex-direction: column;
