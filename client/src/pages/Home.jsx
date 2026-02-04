@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { ImUserTie, ImCalendar } from 'react-icons/im';
 import styles from './Home.module.css';
+
+function htmlToText(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+}
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -61,10 +68,8 @@ export default function Home() {
         <div className={styles.postsContainer}>
           <div className={styles.scrollInner}>
             {posts.map((post) => {
-              const preview =
-                post.content.length > 30
-                  ? post.content.substring(0, 30) + '...'
-                  : post.content;
+              const text = htmlToText(post.content);
+              const preview = text.length > 50 ? text.slice(0, 50) + '…' : text;
 
               return (
                 <div key={post.id} className={styles.postItem}>
@@ -74,14 +79,21 @@ export default function Home() {
                     <div>{post.title}</div>
                     <div style={{ color: 'var(--text-muted)' }}>{preview}</div>
                     <div
+                      className={styles.postDetails}
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         color: 'var(--text-faint)',
                       }}
                     >
-                      <div>Author: {post.author.username}</div>
-                      <div>Posted: {post.publishedAt}</div>
+                      <div>
+                        <ImUserTie />
+                        {post.author.username}
+                      </div>
+                      <div>
+                        <ImCalendar />
+                        {new Date(post.publishedAt).toISOString().split('T')[0]}
+                      </div>
                     </div>
                   </Link>
                 </div>
