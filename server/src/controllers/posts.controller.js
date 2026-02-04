@@ -1,5 +1,6 @@
 const slugify = require("slugify");
 const { validate: isUuid } = require("uuid");
+const sanitizeContent = require("../lib/sanitizeHtml");
 
 async function getAllPosts(req, res, next) {
     try {
@@ -102,11 +103,13 @@ async function createPost(req, res, next) {
         const { title, content } = req.body;
         const { prisma } = await import("../lib/prisma.mjs");
 
+        const safeContent = sanitizeContent(content || "");
+
         const post = await prisma.posts.create({
             data: {
                 authorId: user.id,
                 title,
-                content,
+                content: safeContent,
                 isPublished: false,
                 slug: slugify(title, { lower: true, strict: true }),
             },
@@ -143,7 +146,11 @@ async function updatePostById(req, res, next) {
         }
 
         if (!title) title = post.title;
-        if (!content) content = post.content;
+        if (content === undefined) {
+            content = post.content;
+        } else {
+            content = sanitizeContent(content);
+        }
 
         const data = { title, content };
 
