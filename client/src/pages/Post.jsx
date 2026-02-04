@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { API_BASE_URL } from '../config/api';
+
 import { ImUserTie, ImClock, ImCalendar } from 'react-icons/im';
 
 import styles from './Post.module.css';
@@ -20,7 +22,7 @@ export default function Post() {
         setErrorMsg('');
 
         const res = await fetch(
-          `http://localhost:3001/api/posts/by-slug/${username}/${slug}`,
+          `${API_BASE_URL}/api/posts/by-slug/${username}/${slug}`,
         );
 
         if (!res.ok) {
