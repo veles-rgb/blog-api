@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../config/api';
 
 import { ImUserTie, ImCalendar } from 'react-icons/im';
 import styles from './Home.module.css';
@@ -23,7 +24,7 @@ export default function Home() {
         setIsLoading(true);
         setErrorMsg('');
 
-        const res = await fetch('http://localhost:3001/api/posts');
+        const res = await fetch(`${API_BASE_URL}/api/posts`);
 
         if (!res.ok) {
           const data = await res.json().catch(() => null);
