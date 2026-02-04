@@ -1,0 +1,23 @@
+.postContainer {
+    width: 40%;
+}
+
+h1 {
+    text-align: center;
+    margin: 1rem;
+    color: var(--primary);
+}
+
+.postDetails {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    color: var(--text-faint);
+}
+
+.postDetails div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+}
