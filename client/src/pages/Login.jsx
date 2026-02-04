@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { API_BASE_URL } from '../config/api';
 
-export default function Login() {
+export default function Login({ onAuthSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -44,6 +44,7 @@ export default function Login() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
+      onAuthSuccess(data.user, data.token);
       navigate('/');
     } catch (err) {
       setErrMsg(err.message || 'Something went wrong');
