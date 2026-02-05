@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { API_BASE_URL } from './config/api';
 
@@ -12,6 +13,8 @@ import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 
 export default function App() {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem('user');
     try {
@@ -27,7 +30,9 @@ export default function App() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
-  }, []);
+
+    navigate('/');
+  }, [navigate]);
 
   // check whether token exists AND backend accepts it
   useEffect(() => {
