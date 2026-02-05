@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { API_BASE_URL } from '../config/api';
 
 export default function Login({ onAuthSuccess }) {
@@ -21,30 +20,21 @@ export default function Login({ onAuthSuccess }) {
     try {
       const payload = { username, password };
 
-      // Send login request
       const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
-      // Handle bad responses
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        throw new Error(data?.message || `Login failed ${res.status}`);
+        throw new Error(data?.message || `Login failed (${res.status})`);
       }
 
-      // Handle good response
       const data = await res.json();
 
-      // Set token in localStorage
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
       onAuthSuccess(data.user, data.token);
+
       navigate('/');
     } catch (err) {
       setErrMsg(err.message || 'Something went wrong');
@@ -56,12 +46,15 @@ export default function Login({ onAuthSuccess }) {
   return (
     <main>
       <form onSubmit={handleSubmit}>
+        {errMsg && <p>{errMsg}</p>}
+
         <label>
           Username
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             autoComplete="username"
+            required
           />
         </label>
 
@@ -72,14 +65,13 @@ export default function Login({ onAuthSuccess }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
+            required
           />
         </label>
 
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
-
-        {errMsg && <div>{errMsg}</div>}
       </form>
     </main>
   );
