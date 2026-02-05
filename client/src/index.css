@@ -63,6 +63,13 @@ header {
     margin-bottom: 2rem;
 }
 
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -72,6 +79,7 @@ main {
 
 a {
     color: var(--link);
+    text-decoration: none;
 }
 
 a:hover {
