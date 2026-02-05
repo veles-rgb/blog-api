@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { API_BASE_URL } from '../config/api';
 
 import { ImUserTie, ImCalendar } from 'react-icons/im';
+import { FcLike } from 'react-icons/fc';
+import { FaCommentAlt } from 'react-icons/fa';
+
 import styles from './Home.module.css';
 
 function htmlToText(html) {
@@ -24,6 +27,7 @@ export default function Home() {
         setIsLoading(true);
         setErrorMsg('');
 
+        // Posts
         const res = await fetch(`${API_BASE_URL}/api/posts`);
 
         if (!res.ok) {
@@ -71,7 +75,6 @@ export default function Home() {
             {posts.map((post) => {
               const text = htmlToText(post.content);
               const preview = text.length > 50 ? text.slice(0, 50) + '…' : text;
-
               return (
                 <div key={post.id} className={styles.postItem}>
                   <Link
@@ -94,6 +97,24 @@ export default function Home() {
                       <div>
                         <ImCalendar />
                         {new Date(post.publishedAt).toISOString().split('T')[0]}
+                      </div>
+                    </div>
+                    <div
+                      className={styles.postDetails}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'left',
+                        gap: '2rem',
+                        color: 'var(--text-faint)',
+                      }}
+                    >
+                      <div>
+                        <FcLike />
+                        {post._count.postLikes}
+                      </div>
+                      <div>
+                        <FaCommentAlt />
+                        {post._count.comments}
                       </div>
                     </div>
                   </Link>
