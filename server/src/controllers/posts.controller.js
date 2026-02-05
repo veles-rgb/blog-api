@@ -82,6 +82,11 @@ async function getPostBySlug(req, res, next) {
             },
             include: {
                 author: { select: { username: true } },
+                _count: {
+                    select: {
+                        postLikes: true
+                    }
+                }
             },
         });
 
