@@ -10,6 +10,9 @@ async function getAllPosts(req, res, next) {
             where: { isPublished: true },
             include: {
                 author: { select: { username: true } },
+                _count: {
+                    select: { postLikes: true, comments: true },
+                },
             },
             orderBy: { createdAt: "desc" },
         });
