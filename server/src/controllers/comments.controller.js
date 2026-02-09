@@ -72,6 +72,9 @@ async function postComment(req, res, next) {
                 postId,
                 userId: user.id,
             },
+            include: {
+                user: { select: { username: true } },
+            },
         });
 
         return res.status(201).json({ comment });
