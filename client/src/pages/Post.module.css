@@ -1,5 +1,5 @@
 .postContainer {
-    width: 40%;
+    width: 50%;
 }
 
 h1 {
@@ -19,6 +19,23 @@ h1 {
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
+}
+
+.likedPost,
+.notLikedPost {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    background: none;
+    border: none;
+    color: white;
+}
+
+.likedPost:hover,
+.notLikedPost:hover {
+    cursor: pointer;
+    background-color: var(--text-faint);
 }
 
 .postContent {
@@ -43,6 +60,21 @@ h1 {
     padding: 1rem;
     overflow: hidden;
     box-shadow: var(--shadow);
+    gap: 1rem;
+}
+
+.commentForm {
+    width: 50%;
+}
+
+.commentTextArea {
+    background-color: var(--bg);
+    border: 2px solid var(--primary);
+    border-radius: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    color: white;
+    resize: none;
 }
 
 .commentItem {
@@ -52,7 +84,6 @@ h1 {
     border-radius: 1rem;
     width: 100%;
     padding: 1rem;
-    margin: 1rem;
 }
 
 .commentContent {
