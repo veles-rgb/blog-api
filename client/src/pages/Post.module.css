@@ -67,20 +67,33 @@ h1 {
     width: 50%;
 }
 
+.commentForm button {
+    display: flex;
+    background-color: var(--bg);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    border-radius: 0.5rem;
+}
+
+.commentForm button:hover {
+    cursor: pointer;
+}
+
 .commentTextArea {
     background-color: var(--bg);
-    border: 2px solid var(--primary);
+    border: 2px solid var(--accent);
     border-radius: 0.5rem;
     width: 100%;
     padding: 1rem;
     color: white;
     resize: none;
+    margin-bottom: 0.5rem;
 }
 
 .commentItem {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--border-strong);
     border-radius: 1rem;
     width: 100%;
     padding: 1rem;
