@@ -135,9 +135,39 @@ async function getAllUserLikes(req, res, next) {
     }
 }
 
+async function isLikedByMe(req, res, next) {
+    try {
+        const user = req.user;
+        const { postId } = req.query;
+
+        if (!postId) return res.status(400).json({ message: "postId is required" });
+        if (!isUuid(postId)) return res.status(404).json({ message: "Post not found" });
+
+        const { prisma } = await import("../lib/prisma.mjs");
+
+        const post = await prisma.posts.findUnique({ where: { id: postId } });
+        if (!post || !post.isPublished) return res.status(404).json({ message: "Post not found" });
+
+        const like = await prisma.post_Likes.findUnique({
+            where: {
+                userId_postId: {
+                    userId: user.id,
+                    postId,
+                },
+            },
+        });
+
+        return res.status(200).json({ liked: Boolean(like) });
+    } catch (error) {
+        return next(error);
+    }
+}
+
+
 module.exports = {
     getPostLikesById,
     postLike,
     getAllUserLikes,
     deleteLike,
+    isLikedByMe,
 };
