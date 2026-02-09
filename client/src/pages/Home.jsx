@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { API_BASE_URL } from '../config/api';
 
 import { ImUserTie, ImCalendar } from 'react-icons/im';
-import { FcLike } from 'react-icons/fc';
 import { FaCommentAlt } from 'react-icons/fa';
+import { CiHeart } from 'react-icons/ci';
 
 import styles from './Home.module.css';
 
@@ -109,7 +109,7 @@ export default function Home() {
                       }}
                     >
                       <div>
-                        <FcLike />
+                        <CiHeart />
                         {post._count.postLikes}
                       </div>
                       <div>
