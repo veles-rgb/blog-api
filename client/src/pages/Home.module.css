@@ -24,6 +24,10 @@
     padding: 1rem;
 }
 
+.postItem:hover {
+    border-color: var(--accent);
+}
+
 .postItem a {
     text-decoration: none;
 }
