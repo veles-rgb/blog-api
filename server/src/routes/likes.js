@@ -8,10 +8,12 @@ const likesController = require("../controllers/likes.controller");
 router.get("/", likesController.getPostLikesById); // /api/likes?postId=...
 
 // Protected - Logged in
+router.get("/me", passport.authenticate("jwt", { session: false }), likesController.isLikedByMe);
+// Protected - Owner or Admin
+router.get("/user/:username", passport.authenticate("jwt", { session: false }), likesController.getAllUserLikes);
+// Protected - Logged in
 router.post("/:postId", passport.authenticate("jwt", { session: false }), likesController.postLike);
 router.delete("/:postId", passport.authenticate("jwt", { session: false }), likesController.deleteLike);
 
-// Protected - Owner or Admin
-router.get("/user/:username", passport.authenticate("jwt", { session: false }), likesController.getAllUserLikes);
 
 module.exports = router;
