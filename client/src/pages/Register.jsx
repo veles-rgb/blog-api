@@ -69,7 +69,8 @@ export default function Register({ onAuthSuccess }) {
   return (
     <main>
       <form onSubmit={handleSubmit}>
-        {errMsg && <p>{errMsg}</p>}
+        <h1>Register</h1>
+        {errMsg && <p style={{ color: 'red' }}>{errMsg}</p>}
 
         <label>
           Username
@@ -113,6 +114,9 @@ export default function Register({ onAuthSuccess }) {
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Registering...' : 'Register'}
         </button>
+        <p>
+          Already have an account? <a href="/login">Login</a>.
+        </p>
       </form>
     </main>
   );
