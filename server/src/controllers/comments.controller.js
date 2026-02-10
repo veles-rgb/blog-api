@@ -60,6 +60,7 @@ async function postComment(req, res, next) {
 
         if (!postId) return res.status(400).json({ message: "postId is required" });
         if (!content || !content.trim()) return res.status(400).json({ message: "content is required" });
+        if (content.trim().length > 1000) return res.status(400).json({ message: 'Comment must not exceed 1000 characters' });
 
         const { prisma } = await import("../lib/prisma.mjs");
 
