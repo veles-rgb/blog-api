@@ -64,7 +64,7 @@ export default function Home() {
   if (errorMsg) return <div>Error: {errorMsg}</div>;
 
   return (
-    <main>
+    <main className={styles.homeMain}>
       <h1>Posts</h1>
 
       {posts.length === 0 ? (
@@ -80,8 +80,8 @@ export default function Home() {
                   <Link
                     to={`/posts/${post.author?.username ?? 'unknown'}/${post.slug}`}
                   >
-                    <div>{post.title}</div>
-                    <div style={{ color: 'var(--text-muted)' }}>{preview}</div>
+                    <div className={styles.postTitle}>{post.title}</div>
+                    <div className={styles.postContent}>{preview}</div>
                     <div
                       className={styles.postDetails}
                       style={{
@@ -100,7 +100,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div
-                      className={styles.postDetails}
+                      className={styles.postLikesComments}
                       style={{
                         display: 'flex',
                         justifyContent: 'left',
