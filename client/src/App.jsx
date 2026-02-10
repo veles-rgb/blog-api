@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from './config/api';
 
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 import Home from './pages/Home';
 import Post from './pages/Post';
@@ -129,6 +130,8 @@ export default function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+
+      <Footer />
     </>
   );
 }
