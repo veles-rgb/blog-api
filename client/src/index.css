@@ -56,11 +56,19 @@ body {
     font-family: var(--font-sans);
 }
 
+#root {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    margin: 0;
+}
+
 header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin: 1rem;
 }
 
 header nav {
@@ -70,11 +78,24 @@ header nav {
     gap: 1rem;
 }
 
+header a {
+    border-bottom: 1px solid var(--primary);
+    padding: 0.2rem;
+}
+
+.headerUser {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
 main {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-grow: 1;
 }
 
 a {
@@ -101,4 +122,39 @@ form {
 form label {
     display: flex;
     flex-direction: column;
+    padding: 0.5rem;
+}
+
+form input {
+    background-color: var(--bg);
+    border: 2px solid var(--primary);
+    border-radius: 0.5rem;
+    height: 2.5rem;
+    width: 15rem;
+    color: var(--text);
+    padding: 0.4rem;
+}
+
+form button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary);
+    color: var(--bg);
+    border: none;
+    border-radius: 0.5rem;
+    width: 5rem;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+form button:hover {
+    cursor: pointer;
+    border: 1px solid var(--text);
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
