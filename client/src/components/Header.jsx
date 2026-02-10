@@ -4,24 +4,25 @@ import { ImUser } from 'react-icons/im';
 export default function Header({ user, onLogout }) {
   return (
     <header>
+      <h3>VBlog</h3>
       <nav>
         {user ? (
           <>
-            <Link to="/">Home</Link> |{' '}
+            <Link to="/">Home</Link>
             <a
               onClick={onLogout}
               style={{ cursor: 'pointer', display: 'flex' }}
             >
-              {' '}
               Logout
             </a>
-            <p>
+            <div className="headerUser">
               <ImUser /> {user.username}
-            </p>
+            </div>
           </>
         ) : (
           <>
-            <Link to="/">Home</Link> | <Link to="/login">Login</Link> |{' '}
+            <Link to="/">Home</Link>
+            <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
           </>
         )}
