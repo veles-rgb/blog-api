@@ -46,8 +46,8 @@ export default function Login({ onAuthSuccess }) {
   return (
     <main>
       <form onSubmit={handleSubmit}>
-        {errMsg && <p>{errMsg}</p>}
-
+        <h1>Login</h1>
+        {errMsg && <p style={{ color: 'red' }}>{errMsg}</p>}
         <label>
           Username
           <input
@@ -72,6 +72,9 @@ export default function Login({ onAuthSuccess }) {
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
+        <p>
+          Don't have an account? <a href="/register">Register</a>.
+        </p>
       </form>
     </main>
   );
