@@ -8,15 +8,15 @@ export default function Home({ user }) {
       <h2>Author Options</h2>
       <div className={styles.optionsContainer}>
         <Link to="/new">New Post</Link>
-        <Link>My Posts</Link>
+        <Link to="/my-posts">My Posts</Link>
       </div>
 
       {user.isAdmin ? (
         <>
           <h2>Admin Options</h2>
           <div className={styles.adminOptions}>
-            <Link>All Posts</Link>
-            <Link>Users</Link>
+            <Link to="/all-posts">All Posts</Link>
+            <Link to="/all-users">Users</Link>
           </div>
         </>
       ) : null}
