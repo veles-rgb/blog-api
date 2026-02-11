@@ -8,6 +8,11 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import NewPost from './pages/NewPost';
+import MyPosts from './pages/MyPosts';
+
+// Admin pages
+import AllPosts from './pages/AllPosts';
+import AllUsers from './pages/AllUsers';
 
 export default function App() {
   const navigate = useNavigate();
@@ -135,6 +140,26 @@ export default function App() {
         <Route
           path="/new"
           element={user ? <NewPost /> : <Navigate to="/login" replace />}
+        />
+
+        <Route
+          path="/my-posts"
+          element={user ? <MyPosts /> : <Navigate to="/login" replace />}
+        />
+
+        {/* Admin Routes */}
+        <Route
+          path="/all-posts"
+          element={
+            user && user.isAdmin ? <AllPosts /> : <Navigate to="/" replace />
+          }
+        />
+
+        <Route
+          path="/all-users"
+          element={
+            user && user.isAdmin ? <AllUsers /> : <Navigate to="/" replace />
+          }
         />
       </Routes>
     </>
