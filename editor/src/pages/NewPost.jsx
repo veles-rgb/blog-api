@@ -69,6 +69,8 @@ export default function CreatePost() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter post title..."
+            minLength={2}
+            maxLength={150}
             required
             style={{ width: '100%', marginBottom: '1rem' }}
           />
@@ -81,7 +83,6 @@ export default function CreatePost() {
             type="checkbox"
             value={publish}
             onChange={(e) => setPublish(e.target.checked)}
-            required
           />
         </label>
 
