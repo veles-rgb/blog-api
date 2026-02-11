@@ -1,0 +1,13 @@
+.optionsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.adminOptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
