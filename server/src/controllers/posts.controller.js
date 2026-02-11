@@ -108,7 +108,7 @@ async function createPost(req, res, next) {
             return res.status(403).json({ message: "You are not an author or admin." });
         }
 
-        const { title, content } = req.body;
+        const { title, content, isPublished } = req.body;
         const { prisma } = await import("../lib/prisma.mjs");
 
         const safeContent = sanitizeContent(content || "");
@@ -118,7 +118,8 @@ async function createPost(req, res, next) {
                 authorId: user.id,
                 title,
                 content: safeContent,
-                isPublished: false,
+                isPublished: Boolean(isPublished),
+                publishedAt: isPublished ? new Date() : null,
                 slug: slugify(title, { lower: true, strict: true }),
             },
         });
@@ -128,6 +129,7 @@ async function createPost(req, res, next) {
         return next(error);
     }
 }
+
 
 async function updatePostById(req, res, next) {
     try {
