@@ -109,6 +109,10 @@ async function createPost(req, res, next) {
         }
 
         const { title, content, isPublished } = req.body;
+        if (title.trim().length < 2 || title.trim().length > 150) {
+            return res.status(400).json({ message: 'Title must be between 2 & 150 characters' });
+        }
+
         const { prisma } = await import("../lib/prisma.mjs");
 
         const safeContent = sanitizeContent(content || "");
