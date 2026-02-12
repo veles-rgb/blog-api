@@ -1,0 +1,43 @@
+.myPostsMain {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.postsContainer {
+    height: 100%;
+    width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scrollInner {
+    width: 60%;
+    max-height: 75vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+    align-items: stretch;
+
+    gap: 1rem;
+    scrollbar-color: var(--primary) var(--bg);
+}
+
+.postItem {
+    border: 2px solid var(--primary);
+    border-radius: 1rem;
+    width: 60%;
+    margin: 0 auto;
+    padding: 1rem;
+}
