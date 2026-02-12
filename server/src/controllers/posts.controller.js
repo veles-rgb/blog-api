@@ -166,7 +166,7 @@ async function updatePostById(req, res, next) {
             content = sanitizeContent(content);
         }
 
-        const data = { title, content };
+        const data = { title, content, updatedAt: new Date() };
 
         if (title !== post.title) {
             data.slug = slugify(title, { lower: true, strict: true });
@@ -288,6 +288,28 @@ async function unpublishPost(req, res, next) {
     }
 }
 
+async function getMyPosts(req, res, next) {
+    try {
+        const user = req.user;
+        const { prisma } = await import("../lib/prisma.mjs");
+
+        const posts = await prisma.posts.findMany({
+            where: {
+                authorId: user.id
+            },
+            include: {
+                author: { select: { username: true } },
+                _count: { select: { postLikes: true, comments: true } },
+            },
+            orderBy: { createdAt: "desc" },
+        });
+
+        return res.status(200).json({ posts });
+    } catch (error) {
+        return next(error);
+    }
+}
+
 module.exports = {
     getAllPosts,
     getAllUserPosts,
@@ -298,4 +320,5 @@ module.exports = {
     deletePostById,
     publishPost,
     unpublishPost,
+    getMyPosts
 };
