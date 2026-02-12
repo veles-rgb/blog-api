@@ -144,7 +144,9 @@ export default function App() {
 
         <Route
           path="/my-posts"
-          element={user ? <MyPosts /> : <Navigate to="/login" replace />}
+          element={
+            user ? <MyPosts user={user} /> : <Navigate to="/login" replace />
+          }
         />
 
         {/* Admin Routes */}
