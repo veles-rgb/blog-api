@@ -198,8 +198,15 @@ export default function MyPosts({ user }) {
                     : null}
                 </div>
 
-                <div style={{ color: 'var(--text-faint)' }}>
-                  Status: {post.isPublished ? 'published' : 'unpublished'}
+                <div style={{ display: 'flex', gap: '0.3rem' }}>
+                  <p style={{ color: 'var(--text-muted)' }}>Status:</p>{' '}
+                  <p
+                    style={
+                      post.isPublished ? { color: 'green' } : { color: 'red' }
+                    }
+                  >
+                    {post.isPublished ? 'Published' : 'Unpublished'}
+                  </p>
                 </div>
 
                 <div style={{ display: 'flex', gap: '0.4rem' }}>
@@ -210,14 +217,9 @@ export default function MyPosts({ user }) {
                         ? 'Unpublish'
                         : 'Publish'}
                   </button>
+                  <button>Manage Comments</button>
                   <button type="button" onClick={() => handleEdit(post.id)}>
                     Edit
-                  </button>
-                  <button
-                    style={{ backgroundColor: 'red', color: 'white' }}
-                    onClick={() => handleDelete(post.id)}
-                  >
-                    {deleteLoading ? 'Deleting...' : 'Delete'}
                   </button>
                   {post.isPublished ? (
                     <button>
@@ -225,11 +227,18 @@ export default function MyPosts({ user }) {
                         href={`${CLIENT_URL}/posts/${user.username}/${post.slug}`}
                         rel="noopener noreferrer"
                         target="_blank"
+                        style={{ color: 'black' }}
                       >
                         View
                       </a>
                     </button>
                   ) : null}
+                  <button
+                    style={{ backgroundColor: 'red', color: 'white' }}
+                    onClick={() => handleDelete(post.id)}
+                  >
+                    {deleteLoading ? 'Deleting...' : 'Delete'}
+                  </button>
                 </div>
               </div>
             );
