@@ -148,10 +148,38 @@ async function deleteCommentById(req, res, next) {
     }
 }
 
+async function getMyPostComments(req, res, next) {
+    try {
+        const user = req.user;
+        const { postId } = req.params;
+
+        if (!postId) return res.status(400).json({ message: "postId is required" });
+        if (!isUuid(postId)) return res.status(404).json({ message: "Post not found" });
+
+        const { prisma } = await import("../lib/prisma.mjs");
+
+        const post = await prisma.posts.findUnique({ where: { id: postId, authorId: user.id } });
+        if (!post) return res.status(404).json({ message: "Post not found" });
+
+        const comments = await prisma.comments.findMany({
+            where: { postId: postId },
+            include: {
+                user: { select: { username: true } },
+            },
+            orderBy: { createdAt: "desc" },
+        });
+
+        return res.status(200).json({ comments, post: post.title });
+    } catch (err) {
+        return next(err);
+    }
+}
+
 module.exports = {
     getPostCommentsById,
     getCommentById,
     postComment,
     getAllUserComments,
     deleteCommentById,
+    getMyPostComments
 };
