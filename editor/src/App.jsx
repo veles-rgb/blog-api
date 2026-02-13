@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import NewPost from './pages/NewPost';
 import MyPosts from './pages/MyPosts';
 import Edit from './pages/Edit';
+import PostComments from './pages/PostComments';
 
 // Admin pages
 import AllPosts from './pages/AllPosts';
@@ -170,6 +171,17 @@ export default function App() {
           element={
             user && (user.isAuthor || user.isAdmin) ? (
               <Edit user={user} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/edit/:postId/comments"
+          element={
+            user && (user.isAuthor || user.isAdmin) ? (
+              <PostComments user={user} />
             ) : (
               <Navigate to="/" replace />
             )
