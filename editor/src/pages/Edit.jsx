@@ -4,6 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 
 import { API_BASE_URL } from '../config/api';
 import { TINYMCE_API_KEY } from '../config/tinymce';
+import { useEffect } from 'react';
 
 export default function Edit() {
   const { postId } = useParams();
@@ -16,7 +17,7 @@ export default function Edit() {
 
   const navigate = useNavigate();
 
-  useState(() => {
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
@@ -48,7 +49,7 @@ export default function Edit() {
     }
 
     fetchPost();
-  }, []);
+  }, [postId]);
 
   async function handleSubmit(e) {
     e.preventDefault();
