@@ -3,14 +3,13 @@ const passport = require("passport");
 
 const postsController = require("../controllers/posts.controller");
 
-// Public
 router.get("/", postsController.getAllPosts);
 router.get("/me", passport.authenticate("jwt", { session: false }), postsController.getMyPosts);
+router.get("/me/:postId", passport.authenticate("jwt", { session: false }), postsController.getMyPostById);
 router.get("/:postId", postsController.getPostById);
 router.get("/user/:username", postsController.getAllUserPosts);
 router.get("/by-slug/:username/:slug", postsController.getPostBySlug);
 
-// Protected (User or Admin)
 router.post("/", passport.authenticate("jwt", { session: false }), postsController.createPost);
 router.patch("/:postId", passport.authenticate("jwt", { session: false }), postsController.updatePostById);
 router.delete("/:postId", passport.authenticate("jwt", { session: false }), postsController.deletePostById);
