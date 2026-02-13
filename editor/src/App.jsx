@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import NewPost from './pages/NewPost';
 import MyPosts from './pages/MyPosts';
+import Edit from './pages/Edit';
 
 // Admin pages
 import AllPosts from './pages/AllPosts';
@@ -161,6 +162,17 @@ export default function App() {
           path="/all-users"
           element={
             user && user.isAdmin ? <AllUsers /> : <Navigate to="/" replace />
+          }
+        />
+
+        <Route
+          path="/edit/:postId"
+          element={
+            user && (user.isAuthor || user.isAdmin) ? (
+              <Edit user={user} />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
       </Routes>
