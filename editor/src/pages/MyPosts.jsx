@@ -121,6 +121,10 @@ export default function MyPosts({ user }) {
     navigate(`/edit/${postId}`);
   }
 
+  function handleComments(postId) {
+    navigate(`/edit/${postId}/comments`);
+  }
+
   if (isLoading)
     return (
       <div
@@ -217,7 +221,9 @@ export default function MyPosts({ user }) {
                         ? 'Unpublish'
                         : 'Publish'}
                   </button>
-                  <button>Manage Comments</button>
+                  <button type="button" onClick={() => handleComments(post.id)}>
+                    Manage Comments
+                  </button>
                   <button type="button" onClick={() => handleEdit(post.id)}>
                     Edit
                   </button>
