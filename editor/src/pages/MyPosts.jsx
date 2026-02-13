@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { API_BASE_URL } from '../config/api';
 import { CLIENT_URL } from '../config/client';
@@ -18,6 +19,7 @@ export default function MyPosts({ user }) {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [publishLoading, setPublishLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -115,6 +117,10 @@ export default function MyPosts({ user }) {
     }
   }
 
+  function handleEdit(postId) {
+    navigate(`/edit/${postId}`);
+  }
+
   if (isLoading)
     return (
       <div
@@ -171,16 +177,16 @@ export default function MyPosts({ user }) {
                   <div>
                     {post.isPublished
                       ? 'Published: ' +
-                        new Date(post.createdAt).toISOString().split('T')[0] +
+                        new Date(post.publishedAt).toISOString().split('T')[0] +
                         ' ' +
-                        new Date(post.createdAt).toLocaleTimeString('en-US', {
+                        new Date(post.publishedAt).toLocaleTimeString('en-US', {
                           hour: '2-digit',
                           minute: '2-digit',
                           hour12: true,
                         })
                       : null}
                   </div>
-                  {!post.updatedAt === post.createdAt
+                  {post.updatedAt !== post.createdAt
                     ? 'Updated: ' +
                       new Date(post.updatedAt).toISOString().split('T')[0] +
                       ' ' +
@@ -204,7 +210,9 @@ export default function MyPosts({ user }) {
                         ? 'Unpublish'
                         : 'Publish'}
                   </button>
-                  <button>Edit</button>
+                  <button type="button" onClick={() => handleEdit(post.id)}>
+                    Edit
+                  </button>
                   <button
                     style={{ backgroundColor: 'red', color: 'white' }}
                     onClick={() => handleDelete(post.id)}
