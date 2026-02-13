@@ -144,7 +144,7 @@ async function updatePostById(req, res, next) {
             return res.status(404).json({ message: "Post not found" });
         }
 
-        let { title, content } = req.body || {};
+        let { title, content, isPublished } = req.body || {};
         const { prisma } = await import("../lib/prisma.mjs");
 
         const post = await prisma.posts.findUnique({
@@ -166,7 +166,7 @@ async function updatePostById(req, res, next) {
             content = sanitizeContent(content);
         }
 
-        const data = { title, content, updatedAt: new Date() };
+        const data = { title, content, updatedAt: new Date(), isPublished, publishedAt: new Date() };
 
         if (title !== post.title) {
             data.slug = slugify(title, { lower: true, strict: true });
@@ -310,6 +310,27 @@ async function getMyPosts(req, res, next) {
     }
 }
 
+async function getMyPostById(req, res, next) {
+    try {
+        const user = req.user;
+        const { postId } = req.params;
+        const { prisma } = await import("../lib/prisma.mjs");
+
+        const post = await prisma.posts.findUnique({
+            where: {
+                authorId: user.id,
+                id: postId,
+            }
+        });
+
+        if (!post) return res.status(404).json({ message: "Post not found" });
+
+        return res.status(200).json({ post });
+    } catch (err) {
+        return next(err);
+    }
+}
+
 module.exports = {
     getAllPosts,
     getAllUserPosts,
@@ -320,5 +341,6 @@ module.exports = {
     deletePostById,
     publishPost,
     unpublishPost,
-    getMyPosts
+    getMyPosts,
+    getMyPostById
 };
