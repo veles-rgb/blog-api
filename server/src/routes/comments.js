@@ -8,6 +8,10 @@ const commentsController = require("../controllers/comments.controller");
 router.get("/", commentsController.getPostCommentsById); // GET /api/comments?postId=...
 router.get("/:commentId", commentsController.getCommentById); // GET /api/comments/:commentId
 
+// Get ANY posts comments (even if unpublished)
+router.get("/:postId/comments", passport.authenticate("jwt", { session: false }), commentsController.getMyPostComments);
+
+
 // Protected - Logged in
 router.post("/:postId", passport.authenticate("jwt", { session: false }), commentsController.postComment);
 // POST /api/comments/:postId  (body: { content })
