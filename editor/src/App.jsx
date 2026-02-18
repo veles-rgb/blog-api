@@ -155,14 +155,22 @@ export default function App() {
         <Route
           path="/all-posts"
           element={
-            user && user.isAdmin ? <AllPosts /> : <Navigate to="/" replace />
+            user && user.isAdmin ? (
+              <AllPosts user={user} />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
 
         <Route
           path="/all-users"
           element={
-            user && user.isAdmin ? <AllUsers /> : <Navigate to="/" replace />
+            user && user.isAdmin ? (
+              <AllUsers user={user} />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
 
