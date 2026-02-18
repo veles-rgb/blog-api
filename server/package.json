@@ -8,7 +8,9 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "postinstall": "prisma generate --schema=prisma/schema.prisma"
+    "postinstall": "prisma generate --schema=prisma/schema.prisma",
+    "migrate:deploy": "prisma migrate deploy --schema=prisma/schema.prisma",
+    "start:prod": "npm run migrate:deploy && npm run start"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.3.0",
