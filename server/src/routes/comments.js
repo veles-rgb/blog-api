@@ -29,5 +29,7 @@ router.delete(
     commentsController.deleteCommentById
 );
 
+router.delete("/:postId/:commentId", passport.authenticate("jwt", { session: false }), commentsController.deleteMyPostComment);
+
 
 module.exports = router;
