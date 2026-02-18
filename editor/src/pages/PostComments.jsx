@@ -10,6 +10,8 @@ export default function PostComments() {
   const [comments, setComments] = useState([]);
   const [postTitle, setPostTitle] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
   const [errMsg, setErrMsg] = useState('');
 
   useEffect(() => {
@@ -46,6 +48,35 @@ export default function PostComments() {
 
     fetchComments();
   }, [postId]);
+
+  async function deleteComment(commentId) {
+    const token = localStorage.getItem('token');
+    if (!confirm('Delete this comment?')) return;
+
+    try {
+      setIsDeleting(true);
+      setDeletingId(commentId);
+
+      const res = await fetch(
+        `${API_BASE_URL}/api/comments/${postId}/${commentId}`,
+        {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error(`There was an error: ${res.status}`);
+      }
+
+      setComments((prev) => prev.filter((c) => c.id !== commentId));
+    } catch (err) {
+      setErrMsg(err.message);
+    } finally {
+      setIsDeleting(false);
+      setDeletingId(null);
+    }
+  }
 
   if (isLoading) return 'Loading...';
 
@@ -110,7 +141,14 @@ export default function PostComments() {
                   })}
               </div>
               <div>
-                <button>Delete</button>
+                <button
+                  onClick={() => deleteComment(comment.id)}
+                  disabled={deletingId === comment.id}
+                >
+                  {isDeleting && deletingId === comment.id
+                    ? 'Deleting...'
+                    : 'Delete'}
+                </button>
               </div>
             </div>
           );
