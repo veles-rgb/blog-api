@@ -69,6 +69,8 @@ header {
     align-items: center;
     justify-content: center;
     margin: 1rem;
+    box-shadow: var(--shadow);
+    padding-bottom: 1rem;
 }
 
 header nav {
